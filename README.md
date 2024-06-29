@@ -29,9 +29,10 @@ Overall, any professional with at least some experience with Python programming 
 4. How to create “Chat with X” applications for other data formats.
 
 ## Pre-Reading for Workshop
-Here are some links if you are interested in having pre-read about libraries and models being utilized for the workshop.  
+We will be using the following tools during the workshop. Participants might find it useful to make themselves familiar with these prior to the workshop.
 
-1. [NL2SQL Model](https://huggingface.co/defog/sqlcoder-7b-2): Open source model for NL2SQL. One can use GPT4, Copilot, Amazon Q etc.
-2. [OLLAMA](https://github.com/ollama/ollama): Setting up language model endpoints with memory constraints.
-3. [Embedding Model - MixedBread](https://huggingface.co/mixedbread-ai/mxbai-embed-large-v1): The crispy sentence embedding family from mixedbread ai. We will use embeddings for metadata pruning.
-4. [SQLGLOT](https://sqlglot.com/sqlglot.html): SQLGlot is a no-dependency SQL parser, transpiler, optimizer, and engine. It aims to read a wide variety of SQL inputs (21 different dialects) and output syntactically and semantically correct SQL in the targeted dialects.
+1. [SQLCoder](https://huggingface.co/defog/sqlcoder-7b-2): Open source model for NL2SQL. One can use other models as well such as GPT-4, Github Copilot, Amazon Q etc.
+2. [OLLAMA](https://github.com/ollama/ollama): Setting up language model endpoints with faster inference performance.
+3. [Embedding Model - MixedBread](https://huggingface.co/mixedbread-ai/mxbai-embed-large-v1): The sentence embedding model used for metadata pruning
+4. [SQLGLOT](https://sqlglot.com/sqlglot.html): SQLGlot is a no-dependency SQL parser, transpiler, optimizer, and engine. It aims to read a wide variety of SQL inputs (21 different dialects) and output syntactically and semantically correct SQL in the targeted dialects. We use this to correct hallucinations in the generated SQL
+5. [Model Quantisation](https://huggingface.co/docs/optimum/en/concept_guides/quantization)
