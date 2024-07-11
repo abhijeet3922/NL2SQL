@@ -1,4 +1,18 @@
-OLLAMA_URL = 'http://127.0.0.1:8443'
+######### SETUP #########
+# pip install numpy pandas sqlalchemy sqlglot
+# pip install torch transformers spacy 
+# pip install Levenshtein accelerate bitsandbytes sentence-transformers spacy-transformers
+# python -m spacy download en_core_web_md
+# python -m spacy download en_core_web_trf
+# pip install streamlit pygwalker
+# git clone https://github.com/abhijeet3922/NL2SQL.git
+# cd NL2SQL/
+# streamlit run ch5-frontend-with-streamlit.py --server.port 6006 --theme.base="light"
+
+
+######### UPDATE WITH URL FROM JARVIS DASHBOARD #########
+######### REMOVE TRAILING SLASH #########
+OLLAMA_URL = 'https://3f80402fcee31.notebooksc.jarvislabs.net'
 
 import streamlit as st
 import pandas as pd
@@ -64,7 +78,7 @@ Given the database schema, here is the SQL query that answers [QUESTION]{questio
     prompt = prompt_template.format(question=question, db_schema=pruned_schema)
     print(f'prompt: {prompt}')
     print(f'Querying {model_name}...')
-    ollama = OLLAMA(OLLAMA_URL=OLLAMA_URL, model_name='sqlc-7b-2-F16')
+    ollama = OLLAMA(OLLAMA_URL=OLLAMA_URL, model_name='sqlc-7b-2-Q5KM')
     generated_query = ollama.run(prompt)
 
     if 'i do not know' in generated_query.lower():
@@ -76,6 +90,7 @@ Given the database schema, here is the SQL query that answers [QUESTION]{questio
     try:
         qp = queryPostprocessing(generated_query.upper(), {'table_name':selected_table, 'columns':table_columns}, embedding_model_name)
         processed_query = qp.formatQuerySQLglot()
+        processed_query = processed_query.replace('""', '"')
     except Exception as e:
         print('Post-processing failed!')
         print(e, e.__traceback__)
@@ -93,7 +108,7 @@ def getSQLiteDBQueryResult(query):
         query_result = pd.DataFrame()
     return query_result
 
-@st.cache_data
+# @st.cache_data
 def get_pyg_renderer(df):
     return StreamlitRenderer(df)
 
@@ -404,8 +419,8 @@ with st.sidebar:
         with st.popover('Fetch from Snowflake'):
             st.write('Left as an exercise to the user...')
     
-    model_name = st.radio(label='Model', index=0, options=['sqlc-7b-2-F16', 'GPT-4'])
-    model_name = 'sqlc-7b-2-F16'
+    model_name = st.radio(label='Model', index=0, options=['sqlc-7b-2-Q5KM', 'GPT-4'])
+    model_name = 'sqlc-7b-2-Q5KM'
     st.button(label='Load tables', on_click=set_state, args=[1])
 
 if st.session_state.stage >= 1:
